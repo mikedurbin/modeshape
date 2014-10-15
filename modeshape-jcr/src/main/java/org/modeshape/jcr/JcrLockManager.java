@@ -15,6 +15,7 @@
  */
 package org.modeshape.jcr;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -64,7 +65,9 @@ class JcrLockManager implements LockManager {
      */
     final void cleanLocks() throws RepositoryException {
         lockManager.cleanLocks(session);
-        lockTokens.clear();
+        for (String token : new ArrayList<String>(lockTokens.keySet())) {
+            removeLockToken(token);
+        }
     }
 
     @Override
